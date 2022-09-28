@@ -17,7 +17,7 @@ void paintScene::drawAxes()
     addLine(-240,0,240,0, QPen(QBrush(Qt::gray), 1, Qt::DotLine));
 }
 
-void paintScene::drawPoint(QPointF pnt)
+void paintScene::drawPoint(QPointF pnt, QColor color)
 {
     // draw point as ellipse
     addEllipse(pnt.x() - 5,
@@ -25,7 +25,15 @@ void paintScene::drawPoint(QPointF pnt)
                10,
                10,
                QPen(Qt::NoPen),
-               QBrush(Qt::darkGray));
+               QBrush(color));
+}
+
+void paintScene::drawPointList(QList<QPointF> points)
+{
+    foreach( QPointF pnt, points )
+    {
+        drawPoint(point,Qt::darkCyan);
+    }
 }
 
 void paintScene::mousePressEvent(QGraphicsSceneMouseEvent *event)

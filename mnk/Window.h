@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <paintscene.h>
 #include "sourcedata.h"
+#include "filemanager.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Window; }
@@ -23,10 +24,15 @@ public slots:
 private slots:
     void on_b_addmanual_clicked();
 
+    void on_b_LoadFile_clicked();
+
+    void on_b_SaveFile_clicked();
+
 private:
     Ui::Window *ui;
     paintScene *scene;
     SourceData *sdata;
+    FileManager *fileman;
 };
 
 #endif // Window_H

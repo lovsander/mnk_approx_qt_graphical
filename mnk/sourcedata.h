@@ -20,6 +20,8 @@ public:
     bool GetPoint(int n ,QPointF *pnt) ;
     double GetPoint_x(int n);
     double GetPoint_y(int n);
+    QList<QPointF> GetPointList();
+    void SetPointList(QList<QPointF> points);
     void SetRanges(QRect ranges);
     QRect GetRanges();
 };

@@ -61,6 +61,16 @@ bool SourceData::GetPoint(int n ,QPointF *pnt)
     }
 }
 
+QList<QPointF> SourceData::GetPointList()
+{
+    return points;
+}
+
+void SourceData::SetPointList(QList<QPointF> points)
+{
+    this->points = points;
+}
+
 void SourceData::SetRanges(QRect ranges)
 {
     this->ranges=ranges;
