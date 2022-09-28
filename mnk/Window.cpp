@@ -18,7 +18,7 @@ Window::Window(QWidget *parent) :
     connect(scene, &paintScene::CreatePoint , this, &Window::CreatePoint);
 
     fileman = new FileManager();
-    FileManager::ForceDirectory("/mnk/PointDataFiles/");
+    fileman->ForceDirectory("/mnk/PointDataFiles/");
 }
 
 Window::~Window()
@@ -62,13 +62,13 @@ void Window::on_b_addmanual_clicked()
 void Window::on_b_LoadFile_clicked()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
-                                                    tr("Open File with points data"), FileManager::GetPath(), tr("Point-Data Text Files (*.csv, *.txt)"));
+                                                    tr("Open File with points data"),  fileman->GetPath(), tr("Point-Data Text Files (*.csv, *.txt)"));
     if(fileName!="") {
         ui->l_message->setText("Selected no file");
     } else {
         ui->l_message->setText("Selected file : "+ fileName);
         QList<QPointF> points;
-        FileManager::LoadFile(fileName, points);
+         fileman->LoadFile(fileName, points);
         sdata->SetPointList(points);
         scene->drawPointList(points);
     }
@@ -78,12 +78,12 @@ void Window::on_b_SaveFile_clicked()
 {
     QString fileName = QFileDialog::getSaveFileName(this,
                                                     tr("Save File with points data"),
-                                                    FileManager::GetPath(),
+                                                     fileman->GetPath(),
                                                     tr("Point-Data Text Files (*.csv, *.txt)") );
     if(fileName!="") {
         ui->l_message->setText("Saved no file");
     } else {
         ui->l_message->setText("Saved to file : "+ fileName);
-        FileManager::SaveFile(fileName,sdata->GetPointList());
+         fileman->SaveFile(fileName,sdata->GetPointList());
     }
 }

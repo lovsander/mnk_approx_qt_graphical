@@ -12,13 +12,13 @@ class FileManager : public QObject
     Q_OBJECT
 public:
     explicit FileManager(QObject *parent = nullptr);
-    static bool LoadFile(QString filename, QList<QPointF> &points);
-    static bool SaveFile(QString filename, QList<QPointF> points);
-    static void ForceDirectory(QString path);
-    static QString  GetPath();
-signals:
+    bool LoadFile(QString filename, QList<QPointF> &points);
+    bool SaveFile(QString filename, QList<QPointF> points);
+    void ForceDirectory(QString path);
+    QString  GetPath();
+//signals:
 private:
-   static  QDir dirDataFiles;
+    QDir dirDataFiles;
 };
 
 #endif // FILEMANAGER_H
