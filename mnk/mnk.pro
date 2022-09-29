@@ -12,12 +12,14 @@ SOURCES += \
     filemanager.cpp \
     main.cpp \
     Window.cpp \
+    mnkcalculator.cpp \
     paintscene.cpp \
     sourcedata.cpp
 
 HEADERS += \
     Window.h \
     filemanager.h \
+    mnkcalculator.h \
     paintscene.h \
     sourcedata.h
 

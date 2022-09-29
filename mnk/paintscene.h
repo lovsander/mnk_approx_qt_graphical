@@ -12,6 +12,8 @@ public:
     ~paintScene();
     void drawAxes();
     void drawPoint(QPointF pnt, QColor color =Qt::darkGray);
+    void drawTrend(double a, double b);
+    void clearAll();
 signals:
     void CreatePoint(QPointF);
 private:

@@ -164,21 +164,21 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_3">
+         <widget class="QPushButton" name="b_mnk_calc">
           <property name="text">
            <string>Calculate MNK approx</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton">
+         <widget class="QPushButton" name="b_clear">
           <property name="text">
            <string>Clear all</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QTableWidget" name="tableWidget">
+         <widget class="QTableWidget" name="table">
           <property name="maximumSize">
            <size>
             <width>200</width>
@@ -186,7 +186,7 @@
            </size>
           </property>
           <attribute name="horizontalHeaderDefaultSectionSize">
-           <number>95</number>
+           <number>70</number>
           </attribute>
           <column>
            <property name="text">

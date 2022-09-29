@@ -29,6 +29,19 @@ void paintScene::drawPoint(QPointF pnt, QColor color)
                QBrush(color));
 }
 
+void paintScene::drawTrend(double a, double b)
+{
+    double  y1 = -240*a+b;
+    double  y2 = 240*a+b;
+    addLine(-240,y1,240,y2, QPen(QBrush(Qt::red), 1, Qt::DotLine));
+}
+
+void paintScene::clearAll()
+{
+    clear();
+    drawAxes();
+}
+
 void paintScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     // save coordinates

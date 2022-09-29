@@ -1,5 +1,6 @@
 #include "Window.h"
 #include "ui_Window.h"
+#include "mnkcalculator.h"
 #include <QFileDialog>
 #include <QDebug>
 
@@ -38,6 +39,9 @@ Window::~Window()
 void Window::CreatePoint(QPointF pnt)
 {
     ui->l_message->setText("Added point: x "+QString::number(pnt.x())+",  y "+ QString::number(pnt.y()));
+    ui->table->insertRow(ui->table->rowCount());
+    ui->table->setItem(ui->table->rowCount()-1, 0, new QTableWidgetItem(QString::number(pnt.x())));
+    ui->table->setItem(ui->table->rowCount()-1, 1, new QTableWidgetItem(QString::number(pnt.y())));
 }
 
 void Window::on_b_addmanual_clicked()
@@ -70,16 +74,18 @@ void Window::on_b_addmanual_clicked()
 void Window::on_b_LoadFile_clicked()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
-                                                    tr("Open File with points data"),  fileman->GetPath(), tr("Point-Data Text Files (*.csv, *.txt)"));
+                                                    tr("Open File with points data"),
+                                                    fileman->GetPath(),
+                                                    tr("Point-Data Text Files (*.txt,*.csv)"));
     if(fileName=="") {
         ui->l_message->setText("Selected no file");
     } else {
+        on_b_clear_clicked();
+
         ui->l_message->setText("Selected file : "+ fileName);
         if(fileman->LoadFile(fileName))
         {
             ui->l_message->setText("Loaded file : "+ fileName);
-            //sdata->SetPointList(points);
-            //scene->drawPointList(points);
         }
     }
 }
@@ -97,4 +103,25 @@ void Window::on_b_SaveFile_clicked()
         ui->l_message->setText("Saved to file : "+ fileName);
          fileman->SaveFile(fileName,sdata->GetPointList());
     }
+}
+
+void Window::on_b_mnk_calc_clicked()
+{
+    double a,b;
+    if(MnkCalculator::Calc(sdata->GetPointList(),a,b))
+    {
+         qDebug() << "MnkCalculator done " << a << b;
+         ui->l_message->setText("MnkCalculator done : a= "+ QString::number(a) + ", b= " + QString::number(b) );
+         scene->drawTrend(a,b);
+    } else {
+        ui->l_message->setText("MnkCalculator failed");
+    }
+}
+
+void Window::on_b_clear_clicked()
+{
+    scene->clearAll();
+    sdata->Clear();
+    ui->table->clearContents();
+    ui->table->setRowCount(0);
 }

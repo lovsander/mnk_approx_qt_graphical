@@ -24,6 +24,7 @@ public:
     QList<QPointF> GetPointList();
     void SetRanges(QRect ranges);
     QRect GetRanges();
+    void Clear();
 public slots:
     void CreatePoint(QPointF pnt);
 private:

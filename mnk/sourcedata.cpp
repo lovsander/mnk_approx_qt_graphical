@@ -82,6 +82,11 @@ QRect SourceData::GetRanges()
     return ranges;
 }
 
+void SourceData::Clear()
+{
+    points.clear();
+}
+
 void SourceData::CreatePoint(QPointF pnt)
 {
   AddPoint(pnt);

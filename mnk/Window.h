@@ -20,13 +20,16 @@ public:
 
 public slots:
     void CreatePoint(QPointF pnt);
-
 private slots:
     void on_b_addmanual_clicked();
 
     void on_b_LoadFile_clicked();
 
     void on_b_SaveFile_clicked();
+
+    void on_b_mnk_calc_clicked();
+
+    void on_b_clear_clicked();
 
 private:
     Ui::Window *ui;
