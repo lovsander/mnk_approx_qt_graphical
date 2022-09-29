@@ -1,33 +1,70 @@
 #include "filemanager.h"
 #include <QPointF>
-#include <QDataStream>
+#include <QTextStream>
+#include <QDebug>
 
 FileManager::FileManager(QObject *parent) : QObject(parent)
 {
 
 }
 
-bool FileManager::LoadFile(QString filename, QList<QPointF> &points)
+void FileManager::SetSourceData(SourceData *sdata)
 {
+    this->sdata = sdata;
+}
 
+bool FileManager::LoadFile(QString filename)
+{
+    qDebug() << "LoadFile starts";
+    QList<QPointF> points;
+    QFile loadingFile(filename);
+    if (loadingFile.open(QIODevice::ReadOnly))
+    {
+        QTextStream in(&loadingFile);
+        while (!in.atEnd())
+        {
+            QString line = in.readLine();
+            line = line.replace(',','.');
+            QStringList pair = line.split(";");
+            if(pair.size()==2) {
+                if(SourceData::CheckStringValidity(pair.at(0)) && SourceData::CheckStringValidity(pair.at(1)) )
+                {
+                    QPointF pnt;
+                    pnt.setX(pair.at(0).toDouble());
+                    pnt.setY(pair.at(1).toDouble());
+                    if(sdata->CheckPointValidity(pnt))
+                    {
+                        qDebug() << "point" << pnt.x() << pnt.y();
+                        sdata->AddPoint(pnt);
+                    }
+                }
+
+            }
+        }
+        loadingFile.close();
+    }
+    if(sdata->GetPointsCount()>2) {
+        return true;
+    }
+    else return false;
 }
 
 bool FileManager::SaveFile(QString filename, QList<QPointF> points)
 {
     int len = points.count();
     int written=0;
-    QFile file(GetPath()+filename);
+    QFile savingfile(filename);
 
-    if (file.open(QIODevice::WriteOnly))
+    if (savingfile.open(QIODevice::WriteOnly))
     {
-        QDataStream out(&file);
-
+        QTextStream out(&savingfile);
+        out.setCodec("UTF-8");
         foreach( QPointF pnt, points )
         {
             out << pnt.x()<< ";" << pnt.y() << "\n";
             written++;
         }
-        file.close();
+        savingfile.close();
     }  else return false;
 
     if (written==len) return true;

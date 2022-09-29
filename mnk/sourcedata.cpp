@@ -1,9 +1,14 @@
 #include "sourcedata.h"
 #include <QDebug>
 
-SourceData::SourceData()
+SourceData::SourceData(QObject *parent): QObject(parent)
 {
 
+}
+
+void SourceData::SetScene(paintScene *scene)
+{
+    this->scene = scene;
 }
 
 bool SourceData::CheckPointValidity(QPointF pnt){
@@ -36,6 +41,7 @@ bool SourceData::AddPoint(QPointF pnt) {
     {
         qDebug() << " SourceData::AddPoint " << QString::number(pnt.x())<< QString::number(pnt.y());
         points.append(pnt);
+        scene->drawPoint(pnt);
         return true;
     }
     else {
@@ -66,11 +72,6 @@ QList<QPointF> SourceData::GetPointList()
     return points;
 }
 
-void SourceData::SetPointList(QList<QPointF> points)
-{
-    this->points = points;
-}
-
 void SourceData::SetRanges(QRect ranges)
 {
     this->ranges=ranges;
@@ -79,4 +80,9 @@ void SourceData::SetRanges(QRect ranges)
 QRect SourceData::GetRanges()
 {
     return ranges;
+}
+
+void SourceData::CreatePoint(QPointF pnt)
+{
+  AddPoint(pnt);
 }

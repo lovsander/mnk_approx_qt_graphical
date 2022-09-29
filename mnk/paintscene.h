@@ -12,9 +12,8 @@ public:
     ~paintScene();
     void drawAxes();
     void drawPoint(QPointF pnt, QColor color =Qt::darkGray);
-    void drawPointList(QList<QPointF> points);
 signals:
-void CreatePoint(QPointF);
+    void CreatePoint(QPointF);
 private:
     QPointF     point;
 private:

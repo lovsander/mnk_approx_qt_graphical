@@ -1,4 +1,5 @@
 #include "paintscene.h"
+#include <QDebug>
 
 paintScene::paintScene(QObject *parent) : QGraphicsScene(parent)
 {
@@ -28,22 +29,13 @@ void paintScene::drawPoint(QPointF pnt, QColor color)
                QBrush(color));
 }
 
-void paintScene::drawPointList(QList<QPointF> points)
-{
-    foreach( QPointF pnt, points )
-    {
-        drawPoint(point,Qt::darkCyan);
-    }
-}
-
 void paintScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     // save coordinates
     point = event->scenePos();
-    drawPoint(point);
     // invert y axis because screen starts at top and rise coord to bottom
     // further we'll need invert again when draw results at screen
-    point.setY(-point.y());
+    //point.setY(-point.y());
     emit CreatePoint(point);
 }
 

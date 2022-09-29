@@ -1,17 +1,18 @@
 #ifndef SOURCEDATA_H
 #define SOURCEDATA_H
+#include <QObject>
 #include <QList>
 #include <QPointF>
 #include <QRect>
+#include "paintscene.h"
+
 //Для хранения исходных данных реализовать класс SourceData;
-class SourceData
+class SourceData : public QObject
 {
-private:
-    QList<QPointF> points;
-    QString ErrMessage;
-    QRect ranges;
+     Q_OBJECT
 public:
-    SourceData();
+    explicit SourceData(QObject *parent = nullptr);
+    void SetScene(paintScene *scene);
     bool CheckPointValidity(QPointF pnt);
     bool static CheckStringValidity(QString sval);
     QString GetLastErrorMessage();
@@ -21,9 +22,15 @@ public:
     double GetPoint_x(int n);
     double GetPoint_y(int n);
     QList<QPointF> GetPointList();
-    void SetPointList(QList<QPointF> points);
     void SetRanges(QRect ranges);
     QRect GetRanges();
+public slots:
+    void CreatePoint(QPointF pnt);
+private:
+    QList<QPointF> points;
+    QString ErrMessage;
+    QRect ranges;
+    paintScene *scene;
 };
 
 

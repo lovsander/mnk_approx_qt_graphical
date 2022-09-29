@@ -1,6 +1,7 @@
 #include "Window.h"
 #include "ui_Window.h"
 #include <QFileDialog>
+#include <QDebug>
 
 const QRect ranges(-240,-240,480,480);
 
@@ -9,26 +10,33 @@ Window::Window(QWidget *parent) :
     ui(new Ui::Window)
 {
     ui->setupUi(this);
+
     scene = new paintScene();
     ui->graphicsView->setScene(scene);
     scene->setSceneRect(ranges);
     scene->drawAxes();
+    connect(scene, &paintScene::CreatePoint , this, &Window::CreatePoint);
+
     sdata = new SourceData();
     sdata->SetRanges(ranges);
-    connect(scene, &paintScene::CreatePoint , this, &Window::CreatePoint);
+    sdata->SetScene(scene);
+    connect(scene, &paintScene::CreatePoint , sdata, &SourceData::CreatePoint);
 
     fileman = new FileManager();
     fileman->ForceDirectory("/mnk/PointDataFiles/");
+    fileman->SetSourceData(sdata);
 }
 
 Window::~Window()
 {
     delete ui;
+    delete fileman;
+    delete sdata;
+    delete scene;
 }
 
 void Window::CreatePoint(QPointF pnt)
 {
-    sdata->AddPoint(pnt);
     ui->l_message->setText("Added point: x "+QString::number(pnt.x())+",  y "+ QString::number(pnt.y()));
 }
 
@@ -63,14 +71,16 @@ void Window::on_b_LoadFile_clicked()
 {
     QString fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Open File with points data"),  fileman->GetPath(), tr("Point-Data Text Files (*.csv, *.txt)"));
-    if(fileName!="") {
+    if(fileName=="") {
         ui->l_message->setText("Selected no file");
     } else {
         ui->l_message->setText("Selected file : "+ fileName);
-        QList<QPointF> points;
-         fileman->LoadFile(fileName, points);
-        sdata->SetPointList(points);
-        scene->drawPointList(points);
+        if(fileman->LoadFile(fileName))
+        {
+            ui->l_message->setText("Loaded file : "+ fileName);
+            //sdata->SetPointList(points);
+            //scene->drawPointList(points);
+        }
     }
 }
 
@@ -80,7 +90,8 @@ void Window::on_b_SaveFile_clicked()
                                                     tr("Save File with points data"),
                                                      fileman->GetPath(),
                                                     tr("Point-Data Text Files (*.csv, *.txt)") );
-    if(fileName!="") {
+   qDebug() << "fileName = " << fileName;
+    if(fileName=="") {
         ui->l_message->setText("Saved no file");
     } else {
         ui->l_message->setText("Saved to file : "+ fileName);
