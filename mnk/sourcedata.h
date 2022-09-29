@@ -11,7 +11,6 @@ class SourceData : public QObject
 {
      Q_OBJECT
 public:
-    explicit SourceData(QObject *parent = nullptr);
     void SetScene(paintScene *scene);
     bool CheckPointValidity(QPointF pnt);
     bool static CheckStringValidity(QString sval);

@@ -1,11 +1,6 @@
 #include "sourcedata.h"
 #include <QDebug>
 
-SourceData::SourceData(QObject *parent): QObject(parent)
-{
-
-}
-
 void SourceData::SetScene(paintScene *scene)
 {
     this->scene = scene;
@@ -28,7 +23,7 @@ bool SourceData::CheckPointValidity(QPointF pnt){
 bool SourceData::CheckStringValidity(QString sval)
 {
     bool ok;
-    double fval = sval.toDouble(&ok);
+    sval.toDouble(&ok);
     return ok;
 }
 

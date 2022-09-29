@@ -3,11 +3,6 @@
 #include <QTextStream>
 #include <QDebug>
 
-FileManager::FileManager(QObject *parent) : QObject(parent)
-{
-
-}
-
 void FileManager::SetSourceData(SourceData *sdata)
 {
     this->sdata = sdata;
@@ -43,7 +38,7 @@ bool FileManager::LoadFile(QString filename)
         }
         loadingFile.close();
     }
-    if(sdata->GetPointsCount()>2) {
+    if(sdata->GetPointsCount()>=2) {
         return true;
     }
     else return false;

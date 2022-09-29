@@ -12,7 +12,6 @@ class FileManager : public QObject
 {
     Q_OBJECT
 public:
-    explicit FileManager(QObject *parent = nullptr);
     void SetSourceData(SourceData *sdata);
     bool LoadFile(QString filename);
     bool SaveFile(QString filename, QList<QPointF> points);

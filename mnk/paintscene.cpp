@@ -1,16 +1,21 @@
 #include "paintscene.h"
 #include <QDebug>
 
-paintScene::paintScene(QObject *parent) : QGraphicsScene(parent)
+paintScene::paintScene(QObject *parent)
 {
+    trend = new QGraphicsLineItem;
+}
 
+paintScene::~paintScene()
+{
+   delete trend;
 }
 
 void paintScene::drawAxes()
 {
     //axes
-    addLine(0,-240,0,240, QPen(QBrush(Qt::gray), 1, Qt::DotLine));
-    addLine(-240,0,240,0, QPen(QBrush(Qt::gray), 1, Qt::DotLine));
+    addLine(0,-sceneRect().y(),0,sceneRect().y(), QPen(QBrush(Qt::gray), 1, Qt::DotLine));
+    addLine(-sceneRect().x(),0,sceneRect().x(),0, QPen(QBrush(Qt::gray), 1, Qt::DotLine));
 }
 
 void paintScene::drawPoint(QPointF pnt, QColor color)
@@ -27,9 +32,10 @@ void paintScene::drawPoint(QPointF pnt, QColor color)
 
 void paintScene::drawTrend(double a, double b)
 {
-    double  y1 = -240*a+b;
-    double  y2 = 240*a+b;
-    addLine(-240,y1,240,y2, QPen(QBrush(Qt::red), 1, Qt::SolidLine));
+    double  y1 = -sceneRect().x()*a+b;
+    double  y2 = sceneRect().x()*a+b;
+    removeItem(trend); // kill existing and draw new line
+    trend = addLine(-sceneRect().x(),y1,sceneRect().x(),y2, QPen(QBrush(Qt::red), 2, Qt::SolidLine));
 }
 
 void paintScene::clearAll()
@@ -42,6 +48,7 @@ void paintScene::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     // save coordinates
     point = event->scenePos();
+    //todo
     // invert y axis because screen starts at top and rise coord to bottom
     // further we'll need invert again when draw results at screen
     //point.setY(-point.y());
