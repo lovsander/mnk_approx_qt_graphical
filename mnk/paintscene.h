@@ -16,6 +16,7 @@ public:
     void clearAll();
 signals:
     void CreatePoint(QPointF);
+    void PointDrawn(QPointF);
 private:
     QPointF     point;
 private:

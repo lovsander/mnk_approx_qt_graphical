@@ -55,18 +55,6 @@ int SourceData::GetPointsCount()
     return points.count();
 }
 
-bool SourceData::GetPoint(int n ,QPointF *pnt)
-{
-    if (n < GetPointsCount()) {
-        *pnt = points.at(n);
-        return true;
-    } else {
-        ErrMessage="SourceData::GetPoint: n < GetPointsCount()";
-        pnt = nullptr;
-        return false;
-    }
-}
-
 QList<QPointF> SourceData::GetPointList()
 {
     return points;

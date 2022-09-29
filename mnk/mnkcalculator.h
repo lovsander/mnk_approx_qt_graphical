@@ -6,7 +6,6 @@
 class MnkCalculator
 {
 public:
-    //MnkCalculator();
     static bool Calc(QList<QPointF> points, double &a, double &b);
 };
 

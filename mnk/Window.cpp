@@ -16,12 +16,13 @@ Window::Window(QWidget *parent) :
     ui->graphicsView->setScene(scene);
     scene->setSceneRect(ranges);
     scene->drawAxes();
-    connect(scene, &paintScene::CreatePoint , this, &Window::CreatePoint);
+    connect(scene, &paintScene::PointDrawn , this, &Window::PointShow);
 
     sdata = new SourceData();
     sdata->SetRanges(ranges);
     sdata->SetScene(scene);
     connect(scene, &paintScene::CreatePoint , sdata, &SourceData::CreatePoint);
+
 
     fileman = new FileManager();
     fileman->ForceDirectory("/mnk/PointDataFiles/");
@@ -36,7 +37,7 @@ Window::~Window()
     delete scene;
 }
 
-void Window::CreatePoint(QPointF pnt)
+void Window::PointShow(QPointF pnt)
 {
     ui->l_message->setText("Added point: x "+QString::number(pnt.x())+",  y "+ QString::number(pnt.y()));
     ui->table->insertRow(ui->table->rowCount());
@@ -76,7 +77,7 @@ void Window::on_b_LoadFile_clicked()
     QString fileName = QFileDialog::getOpenFileName(this,
                                                     tr("Open File with points data"),
                                                     fileman->GetPath(),
-                                                    tr("Point-Data Text Files (*.txt,*.csv)"));
+                                                    tr("Point-Data Text Files (*.*)"));
     if(fileName=="") {
         ui->l_message->setText("Selected no file");
     } else {
@@ -95,7 +96,7 @@ void Window::on_b_SaveFile_clicked()
     QString fileName = QFileDialog::getSaveFileName(this,
                                                     tr("Save File with points data"),
                                                      fileman->GetPath(),
-                                                    tr("Point-Data Text Files (*.csv, *.txt)") );
+                                                    tr("Point-Data Text Files (*.txt)") );
    qDebug() << "fileName = " << fileName;
     if(fileName=="") {
         ui->l_message->setText("Saved no file");

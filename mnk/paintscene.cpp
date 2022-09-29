@@ -27,6 +27,7 @@ void paintScene::drawPoint(QPointF pnt, QColor color)
                10,
                QPen(Qt::NoPen),
                QBrush(color));
+   emit PointDrawn(pnt);
 }
 
 void paintScene::drawTrend(double a, double b)

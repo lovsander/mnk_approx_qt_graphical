@@ -19,7 +19,7 @@ public:
     ~Window();
 
 public slots:
-    void CreatePoint(QPointF pnt);
+    void PointShow(QPointF pnt);
 private slots:
     void on_b_addmanual_clicked();
 

@@ -18,9 +18,6 @@ public:
     QString GetLastErrorMessage();
     bool AddPoint(QPointF pnt);
     int GetPointsCount();
-    bool GetPoint(int n ,QPointF *pnt) ;
-    double GetPoint_x(int n);
-    double GetPoint_y(int n);
     QList<QPointF> GetPointList();
     void SetRanges(QRect ranges);
     QRect GetRanges();

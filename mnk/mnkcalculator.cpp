@@ -1,12 +1,5 @@
 #include "mnkcalculator.h"
 
-//MnkCalculator::MnkCalculator()
-//{
-
-//}
-
-
-
 bool MnkCalculator::Calc(QList<QPointF> points, double &a, double &b)
 {
     int n = points.size();
