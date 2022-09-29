@@ -55,11 +55,7 @@ void Window::on_b_addmanual_clicked()
     {
         QPointF *pnt = new QPointF(ui->le_x->text().toDouble(),ui->le_y->text().toDouble());
 
-        if (sdata->AddPoint(*pnt))
-        {
-            scene->drawPoint(*pnt,Qt::red);
-        }
-        else
+        if (!sdata->AddPoint(*pnt))
         {
             ui->l_message->setText("Check Point Validity failed. "+sdata->GetLastErrorMessage());
         }

@@ -6,11 +6,6 @@ paintScene::paintScene(QObject *parent) : QGraphicsScene(parent)
 
 }
 
-paintScene::~paintScene()
-{
-
-}
-
 void paintScene::drawAxes()
 {
     //axes
@@ -34,7 +29,7 @@ void paintScene::drawTrend(double a, double b)
 {
     double  y1 = -240*a+b;
     double  y2 = 240*a+b;
-    addLine(-240,y1,240,y2, QPen(QBrush(Qt::red), 1, Qt::DotLine));
+    addLine(-240,y1,240,y2, QPen(QBrush(Qt::red), 1, Qt::SolidLine));
 }
 
 void paintScene::clearAll()
