@@ -114,7 +114,7 @@ void Window::on_b_mnk_calc_clicked()
          ui->l_message->setText("MnkCalculator done : a= "+ QString::number(a) + ", b= " + QString::number(b) );
          scene->drawTrend(a,b);
     } else {
-        ui->l_message->setText("MnkCalculator failed");
+        ui->l_message->setText("Mnk Calculation failed!");
     }
 }
 
